@@ -4,6 +4,9 @@
 FULL_DUMPS_DIR="/var/mysql_dumps"
 BIN_DUMPS_DIR="/var/log/mysql"
 
+REMOTE_SERVER_IP="122.0.76.160"
+REMOTE_SERVER_SSH_USER="lmis"
+REMOTE_SERVER_SSH_PASSWD="lmis"
 REMOTE_FULL_DUMPS_DIR="/var/mysql_dumps"
 REMOTE_BIN_DUMPS_DIR="/var/mysql/log_dumps"
 
@@ -24,7 +27,8 @@ if [ `date +%A` = "Monday" -a `date +%H` = "18" -o "$1" = "dump" ]; then
   rm -f $FULL_DUMPS_DIR/*.bz2
   rm -f $BIN_DUMPS_DIR/*.bz2
 
-  #mysqldump -u$USER -p$PASSWD --flush-logs --delete-master-logs --master-data=2 --add-drop-table --lock-all-tables --databases $DATABASES > $FULL_DUMPS_DIR/$DBFN
+  #ref http://dba.stackexchange.com/questions/19532/safest-way-to-perform-mysqldump-on-a-live-system-with-active-reads-and-writes
+  mysqldump -u$USER -p$PASSWD --flush-logs --single-transaction --delete-master-logs --master-data=2 --add-drop-table --databases $DATABASES > $FULL_DUMPS_DIR/$DBFN
   bzip2 $FULL_DUMPS_DIR/$DBFN
   echo "mysql dump complete"
 else
@@ -39,6 +43,6 @@ do
   fi
 done
 
-lftp sftp://lmis:lmis@122.0.76.160 -e "set ftp:ssl-protect-data true;mirror -er --reverse -I *.bz2 -X $FULL_DUMPS_DIR $REMOTE_FULL_DUMPS_DIR;mirror -er --reverse -I *.bz2 -X $newestlog $BIN_DUMPS_DIR $REMOTE_BIN_DUMPS_DIR;mput $BIN_DUMPS_DIR/mysql-bin.index -O $REMOTE_BIN_DUMPS_DIR; exit;"
+lftp sftp://$REMOTE_SERVER_SSH_USER:$REMOTE_SERVER_SSH_PASSWD@$REMOTE_SERVER_IP -e "set ftp:ssl-protect-data true;mirror -er --reverse -I *.bz2 -X $FULL_DUMPS_DIR $REMOTE_FULL_DUMPS_DIR;mirror -er --reverse -I *.bz2 -X $newestlog $BIN_DUMPS_DIR $REMOTE_BIN_DUMPS_DIR;mput $BIN_DUMPS_DIR/mysql-bin.index -O $REMOTE_BIN_DUMPS_DIR; exit;"
 #lftp sftp://lmis:lmis@122.0.76.160 -e "set ftp:ssl-protect-data true;mirror -er --reverse -I *.bz2 /home/lmis/db_backup /home/lmis/db_backupt; exit;"
 #echo "Bin Logs backed up"
