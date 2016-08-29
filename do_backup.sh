@@ -13,10 +13,7 @@ PASSWD="root"
 
 DATABASES="il_yanzhao_new_production il_yanzhao_lite_production yanzhao-mis_production"
 
-#if [ `date +%A` == "Sunday" -a `date +%H` == "06" -o "$1" == "dump" ]; then
-week_day=`date +%A`
-hour_day=`date +%H`
-if [ "$week_day" == "Sunday" -a "$hour_day" == "06" -o "$1" == "dump" ]; then
+if [ `date +%A` = "Monday" -a `date +%H` = "18" -o "$1" = "dump" ]; then
   echo "Weekly Backup started `date`"
   echo "Full mysql database dump started"
   echo 'All existing full backups and binary log files will be removed'
@@ -27,7 +24,7 @@ if [ "$week_day" == "Sunday" -a "$hour_day" == "06" -o "$1" == "dump" ]; then
   rm -f $FULL_DUMPS_DIR/*.bz2
   rm -f $BIN_DUMPS_DIR/*.bz2
 
-  mysqldump -u$USER -p$PASSWD --flush-logs --delete-master-logs --master-data=2 --add-drop-table --lock-all-tables --databases $DATABASES > $FULL_DUMPS_DIR/$DBFN
+  #mysqldump -u$USER -p$PASSWD --flush-logs --delete-master-logs --master-data=2 --add-drop-table --lock-all-tables --databases $DATABASES > $FULL_DUMPS_DIR/$DBFN
   bzip2 $FULL_DUMPS_DIR/$DBFN
   echo "mysql dump complete"
 else
