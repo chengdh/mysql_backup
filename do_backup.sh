@@ -45,6 +45,6 @@ do
   fi
 done
 
-lftp sftp://$REMOTE_SERVER_SSH_USER:$REMOTE_SERVER_SSH_PASSWD@$REMOTE_SERVER_IP -e "set ftp:ssl-protect-data true;mirror -er --reverse -I *.bz2 -X $FULL_DUMPS_DIR $REMOTE_FULL_DUMPS_DIR;mirror -er --reverse -I *.bz2 -X $newestlog $BIN_DUMPS_DIR $REMOTE_BIN_DUMPS_DIR;mput $BIN_DUMPS_DIR/mysql-bin.index -O $REMOTE_BIN_DUMPS_DIR; exit;"
+lftp sftp://$REMOTE_SERVER_SSH_USER:$REMOTE_SERVER_SSH_PASSWD@$REMOTE_SERVER_IP -e "set ftp:ssl-protect-data true;mirror -er --reverse -I *.bz2 $FULL_DUMPS_DIR $REMOTE_FULL_DUMPS_DIR;mirror -er --reverse -I *.bz2 -X $newestlog $BIN_DUMPS_DIR $REMOTE_BIN_DUMPS_DIR;mput $BIN_DUMPS_DIR/mysql-bin.index -O $REMOTE_BIN_DUMPS_DIR; exit;"
 #lftp sftp://lmis:lmis@122.0.76.160 -e "set ftp:ssl-protect-data true;mirror -er --reverse -I *.bz2 /home/lmis/db_backup /home/lmis/db_backupt; exit;"
 #echo "Bin Logs backed up"
