@@ -25,7 +25,6 @@ else
   mysqladmin -u$USER -p$PASSWD flush-logs
 fi
 newestlog=`ls -d $BIN_DUMPS_DIR/mysql-bin.?????? | sed 's/^.*\.//' | sort -g | tail -n 1`
-echo $newstlog
 for file in `ls /$BIN_DUMPS_DIR/mysql-bin.??????`
 do
   if [ "$BIN_DUMPS_DIR/mysql-bin.$newestlog" != "$file" ]; then
