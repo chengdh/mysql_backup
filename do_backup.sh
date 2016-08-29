@@ -3,6 +3,10 @@
 #echo "Bin Logs backed up"
 FULL_DUMPS_DIR="/var/mysql_dumps"
 BIN_DUMPS_DIR="/var/log/mysql"
+
+REMOTE_FULL_DUMPS_DIR="/var/mysql_dumps"
+REMOTE_BIN_DUMPS_DIR="/var/mysql/log_dumps"
+
 USER="root"
 PASSWD="root"
 
@@ -32,5 +36,10 @@ do
   fi
 done
 
-#sftp -u 'ftpuser,ftppassword' backupspace.rimuhosting.com -e "set ftp:ssl-protect-data true; mirror -er --reverse -I *.bz2 -X $newestlog /var/lib/mysql /myvar/lib/mysql; mput /var/lib/mysql/mybinlog.index -O /myvar/lib/mysql; exit;"
+lftp sftp://lmis:lmis@122.0.76.160
+-e "set ftp:ssl-protect-data true;
+mirror -er --reverse -I *.bz2 -X $FULL_DUMPS_DIR $REMOTE_FULL_DUMPS_DIR;
+mirror -er --reverse -I *.bz2 -X $newestlog $BIN_DUMPS_DIR $REMOTE_BIN_DUMPS_DIR;
+mput $BIN_DUMPS_DIR/mysql-bin.index -O $REMOTE_BIN_DUMPS_DIR; exit;"
+#lftp sftp://lmis:lmis@122.0.76.160 -e "set ftp:ssl-protect-data true;mirror -er --reverse -I *.bz2 /home/lmis/db_backup /home/lmis/db_backupt; exit;"
 #echo "Bin Logs backed up"
