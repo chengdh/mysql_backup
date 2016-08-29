@@ -16,7 +16,9 @@ PASSWD="root"
 
 DATABASES="il_yanzhao_new_production il_yanzhao_lite_production yanzhao-mis_production"
 
-if [ `date +%A` = "Monday" -a `date +%H` = "18" -o "$1" = "dump" ]; then
+#每周日早上4点作全备份
+#每天早上4点作增量备份
+if [ `date +%A` = "Sunday" -a `date +%H` = "04" -o "$1" = "dump" ]; then
   echo "Weekly Backup started `date`"
   echo "Full mysql database dump started"
   echo 'All existing full backups and binary log files will be removed'
@@ -43,6 +45,6 @@ do
   fi
 done
 
-lftp sftp://$REMOTE_SERVER_SSH_USER:$REMOTE_SERVER_SSH_PASSWD@$REMOTE_SERVER_IP -e "set ftp:ssl-protect-data true;mirror -er --reverse -I *.bz2 -X $FULL_DUMPS_DIR $REMOTE_FULL_DUMPS_DIR;mirror -er --reverse -I *.bz2 -X $newestlog $BIN_DUMPS_DIR $REMOTE_BIN_DUMPS_DIR;mput $BIN_DUMPS_DIR/mysql-bin.index -O $REMOTE_BIN_DUMPS_DIR; exit;"
+lftp sftp://$REMOTE_SERVER_SSH_USER:$REMOTE_SERVER_SSH_PASSWD@$REMOTE_SERVER_IP -e "set ftp:ssl-protect-data true;mirror -er --reverse -I *.bz2 -X $FULL_DUMPS_DIR $REMOTE_FULL_DUMPS_DIR;mirror -er --reverse -I *.bz2 -X $newestlog $BIN_DUMPS_DIR $REMOTE_BIN_DUMPS_DIR;mput /var/log/mysql/mysql-bin.index -O $REMOTE_BIN_DUMPS_DIR; exit;"
 #lftp sftp://lmis:lmis@122.0.76.160 -e "set ftp:ssl-protect-data true;mirror -er --reverse -I *.bz2 /home/lmis/db_backup /home/lmis/db_backupt; exit;"
 #echo "Bin Logs backed up"
