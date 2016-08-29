@@ -8,7 +8,7 @@ REMOTE_SERVER_IP="122.0.76.160"
 REMOTE_SERVER_SSH_USER="lmis"
 REMOTE_SERVER_SSH_PASSWD="lmis"
 REMOTE_FULL_DUMPS_DIR="/home/lmis/mysql_dumps"
-REMOTE_BIN_DUMPS_DIR="/home/lmis/mysql_dumps"
+REMOTE_BIN_DUMPS_DIR="/home/lmis/mysql_binlog_dumps"
 
 USER="root"
 PASSWD="root"
