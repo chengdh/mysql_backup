@@ -10,7 +10,7 @@ REMOTE_BIN_DUMPS_DIR="/var/mysql/log_dumps"
 USER="root"
 PASSWD="root"
 
-if [ `date +%A` == "Sunday" -a `date +%H` == "06" -o "$1" == "dump" ]; then
+if [ "`date +%A`" == "Sunday" -a "`date +%H`" == "06" -o "$1" == "dump" ]; then
   echo "Weekly Backup started `date`"
   echo "Full mysql database dump started"
   echo 'All existing full backups and binary log files will be removed'
