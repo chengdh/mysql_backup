@@ -4,7 +4,7 @@
 FULL_DUMPS_DIR="/var/mysql_dumps"
 BIN_DUMPS_DIR="/var/log/mysql"
 
-REMOTE_SERVER_IP="122.0.76.160"
+REMOTE_SERVER_IP="106.3.45.42"
 REMOTE_SERVER_SSH_USER="lmis"
 REMOTE_SERVER_SSH_PASSWD="lmis"
 REMOTE_FULL_DUMPS_DIR="/home/lmis/mysql_dumps"
