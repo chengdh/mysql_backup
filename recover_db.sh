@@ -16,16 +16,17 @@ echo "mkdir temp dir"
 mkdir -p $TMP_FULL_DUMPS_DIR
 mkdir -p $TMP_BIN_DUMPS_DIR
 
+cp $FULL_DUMPS_DIR/*.bz2 $TMP_FULL_DUMPS_DIR
+cp $BIN_DUMPS_DIR/*.bz2 $TMP_BIN_DUMPS_DIR
+
 
 echo "unzip full db files"
-cd $TMP_FULL_DUMPS_DIR
-for fn in $FULL_DUMPS_DIR/*.bz2 ; do
+for fn in $TMP_FULL_DUMPS_DIR/*.bz2 ; do
    bunzip2 -dkf $fn
 done
 
 echo "unzip binlog  files"
-cd $TMP_BIN_DUMPS_DIR
-for fn in $BIN_DUMPS_DIR/*.bz2 ; do
+for fn in $TMP_BIN_DUMPS_DIR/*.bz2 ; do
    bunzip2 -dkf $fn
 done
 
