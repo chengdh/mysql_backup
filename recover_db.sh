@@ -18,13 +18,15 @@ mkdir -p $TMP_BIN_DUMPS_DIR
 
 
 echo "unzip full db files"
+cd $TMP_FULL_DUMPS_DIR
 for fn in $FULL_DUMPS_DIR/*.bz2 ; do
-   tar xjf $fn -C $TMP_FULL_DUMPS_DIR
+   bunzip2 -dkf $FULL_DUMPS_DIR/$fn
 done
 
 echo "unzip binlog  files"
+cd $TMP_BIN_DUMPS_DIR
 for fn in $BIN_DUMPS_DIR/*.bz2 ; do
-   tar xjf $fn -C $TMP_BIN_DUMPS_DIR
+   bunzip2 -dkf $BIN_DUMPS_DIR/$fn
 done
 
 #恢复数据库
