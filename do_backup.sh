@@ -16,9 +16,9 @@ PASSWD="root"
 
 DATABASES="il_yanzhao_new_production il_yanzhao_lite_production yanzhao-mis_production"
 
-#每周日早上4点作全备份
+#每周日 周2 周4 早上4点作全备份
 #每天早上4点作增量备份
-if [ `date +%A` = "Sunday" -a `date +%H` = "04" -o "$1" = "dump" ]; then
+if [ `date +%A` = "Sunday" -o `date +%A` = "Tuesday" -o `date +%A` = "Thursday"  -a `date +%H` = "04" -o "$1" = "dump" ]; then
   echo "Weekly Backup started `date`"
   echo "Full mysql database dump started"
   echo 'All existing full backups and binary log files will be removed'
