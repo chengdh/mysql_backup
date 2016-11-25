@@ -40,6 +40,6 @@ echo 'recover binlog file'
 #读取mysql-bin.index
 while IFS='' read -r line || [[ -n "$line" ]]; do
     echo "recover bin log from file: $line"
-    filename = echo $line | cut -d'/' -f 5
-    mysqlbinlog $TMP_FULL_DUMPS_DIR/$filename | mysql -u$USER -p$PASSWD
+    filename="$(echo $line| cut -d'/' -f 5)"
+    mysqlbinlog $TMP_BIN_DUMPS_DIR/$filename | mysql -u$USER -p$PASSWD
 done < $BIN_DUMPS_DIR/mysql-bin.index
