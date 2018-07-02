@@ -5,7 +5,7 @@ TMP_FULL_DUMPS_DIR="/tmp/mysql_dumps"
 TMP_BIN_DUMPS_DIR="/tmp/mysql_binlog_dumps"
 
 USER="root"
-PASSWD="242612yesno"
+PASSWD="PASSWORDisroot"
 
 #删除临时目录
 echo "remove temp dir"

@@ -11,7 +11,7 @@ REMOTE_FULL_DUMPS_DIR="/home/lmis/mysql_dumps"
 REMOTE_BIN_DUMPS_DIR="/home/lmis/mysql_binlog_dumps"
 
 USER="root"
-PASSWD="root"
+PASSWD="PASSWORDisroot"
 
 
 DATABASES="il_yanzhao_new_production il_yanzhao_lite_production yanzhao-mis_production"
